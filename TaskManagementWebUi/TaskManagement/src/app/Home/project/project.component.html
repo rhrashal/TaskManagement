@@ -2,3 +2,27 @@
   project works!
 </p>
 
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-border table-dark">
+        <thead>
+          <tr>
+            <!-- <th scope="col">#</th> -->
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of projectList">
+            <!-- <td scope="row">{{$index}}</td> -->
+            <td>{{item.ProjectName}}</td>
+            <td>{{item.ProjectName}}</td>
+            <td>{{item.ProjectName}}</td>
+          </tr>         
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 
-const PROTOCOL = "https";
-const PORT = 44371;
+// const PROTOCOL = "https";
+// const PORT = 44371;
 
 @Injectable()
 export class RestDataSource {
@@ -15,7 +16,8 @@ export class RestDataSource {
     Role: string;
 
     constructor(private http: HttpClient) {
-        this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
+        // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
+        this.baseUrl = environment.apiUrl;
 
     }
 
@@ -32,7 +34,8 @@ export class RestDataSource {
             localStorage.setItem("token", this.auth_token);
             sessionStorage.setItem("username", this.Username);
             sessionStorage.setItem("rolename", this.Role);
-            console.log(this.Username, this.Role);
+            // console.log(this.Username, this.Role);
+            // console.log(this.baseUrl);
             return response;
         }));
     }
@@ -41,7 +44,7 @@ export class RestDataSource {
     public getOptions() {
         let a = localStorage.getItem('token');
         let token = a;
-        console.log(token);
+        // console.log(token);
         return {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
