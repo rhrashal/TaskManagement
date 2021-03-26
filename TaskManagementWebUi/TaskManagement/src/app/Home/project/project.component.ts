@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { RestDataSource } from 'src/app/Service/data.Service';
 import { Project } from 'src/app/Service/Model';
 import { environment } from 'src/environments/environment';
+import { toArray, take } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-project',
@@ -12,25 +15,86 @@ import { environment } from 'src/environments/environment';
   // styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
+  registerForm: FormGroup;
+  submitted = false;
+  projectList:any = []
+  project : Project = {
+    Id : 0,
+    ProjectName: "",
+    ExpireDate: "",
+    IsSupport:false,
+  };
 
-  projectList: Project[] = []
 
-  constructor(private http : HttpClient, private rest : RestDataSource) { }
+  constructor(private http : HttpClient, private rest : RestDataSource,private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getProjectList();
+
+    this.registerForm = this.formBuilder.group({
+      ProjectName: ['', Validators.required],
+      ExpireDate: ['', Validators.required],
+      IsSupport: ['', Validators.required]
+  });
   }
+ // convenience getter for easy access to form fields
+    get f() { return this.registerForm.controls; }
+
 
   getProjectList(){
     this.http.get<any>(environment.apiUrl+'TaskManagement/GetAllProject', this.rest.getOptions())
     .subscribe(res=>{
       this.projectList =[];
-      this.projectList.push( res);
-      console.log(this.projectList);
+      this.projectList = res.results;
+      console.log(this.projectList);     
     });
   }
  
 
+onSubmit() {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.registerForm.invalid) {
+            return;
+        }
+        if(this.project.Id>0){
+          this.http.put<any>(environment.apiUrl+'TaskManagement/UpdateProject',this.project, this.rest.getOptions())
+          .subscribe(res=>{
+            console.log(res); 
+            this.getProjectList();      
+          });
+        }else{
+          this.http.post<any>(environment.apiUrl+'TaskManagement/AddProject',this.registerForm.value, this.rest.getOptions())
+          .subscribe(res=>{
+            console.log(res); 
+            this.getProjectList();
+          });    
+        }
+        
+        //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value))
+    }
 
+    editClick(data){
+      //console.log(data);
+      this.project.Id = data.id;
+      this.project.ProjectName= data.projectName;
+      this.project.ExpireDate = new DatePipe( data.expireDate).toString();
+      this.project.IsSupport=data.isSupport;
+      console.log(this.project);
+     // this.registerForm.value.ProjectName = data.projectName;
+    }
+
+    deleteProject(id){
+      if(confirm('Are you sure??')){
+        if(id > 0){
+          this.http.delete<any>(environment.apiUrl+'TaskManagement/deleteProject/'+ id, this.rest.getOptions())
+            .subscribe(res=>{
+              console.log(res); 
+              this.getProjectList();
+            }); 
+        }
+      }
+      
+    }
 
 }

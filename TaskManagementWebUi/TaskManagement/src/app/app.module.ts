@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {  HttpClientModule } from '@angular/common/http';
 
@@ -24,7 +24,7 @@ import { SprintComponent } from './Home/sprint/sprint.component';
     AppComponent,loginComponent,NotFoundComponent,HomeComponent, ProjectComponent, SprintComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule,RouterModule, FormsModule, BrowserAnimationsModule, 
+    BrowserModule, HttpClientModule,RouterModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule,
      routing
   ],
   providers: [ AuthService, AuthGuard,RestDataSource],

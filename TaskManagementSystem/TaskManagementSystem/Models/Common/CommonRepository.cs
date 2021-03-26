@@ -310,7 +310,7 @@ namespace TaskManagementSystem.Models
                 dtResults = SqlHelper.ExecuteDataTable(ConStr, CommandType.Text, strSQL);
                 isExist = dtResults.Rows.Count > 0 ? true : false;
             }
-            catch (Exception )
+            catch (Exception ex )
             {
                 isExist = true;
             }
