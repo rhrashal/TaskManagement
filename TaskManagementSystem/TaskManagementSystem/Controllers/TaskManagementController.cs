@@ -9,7 +9,7 @@ using TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.Controllers
 {
-    [Route("[controller]/[action]")]
+    
     [ApiController]
     [Authorize]
     public class TaskManagementController : ControllerBase
@@ -19,7 +19,7 @@ namespace TaskManagementSystem.Controllers
         {
             _context = context;
         }
-
+        [Route("[controller]/[action]")]
         [HttpGet]
         public ActionResult<List<Country>> GetUser()
         {
@@ -28,6 +28,7 @@ namespace TaskManagementSystem.Controllers
 
         #region Project
         [HttpGet]
+        [Route("[controller]/[action]")]
         public JsonResult GetAllProject() 
         {
 
@@ -36,6 +37,7 @@ namespace TaskManagementSystem.Controllers
             return new JsonResult(cr);
         }
         [HttpPost]
+        [Route("[controller]/[action]")]
         public JsonResult AddProject( Project project)
         {
             CommonResponse cr = new CommonResponse();
@@ -57,6 +59,7 @@ namespace TaskManagementSystem.Controllers
             return new JsonResult(cr);
         }
         [HttpPut]
+        [Route("TaskManagement/UpdateProject")]
         public JsonResult UpdateProject(Project project)
         {
             CommonResponse cr = new CommonResponse();
@@ -66,7 +69,7 @@ namespace TaskManagementSystem.Controllers
                 pro.ProjectName = project.ProjectName;
                 pro.ExpireDate = project.ExpireDate;
                 pro.IsSupport = project.IsSupport;
-                _context.Project.Update(project);
+                _context.Project.Update(pro);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -77,6 +80,7 @@ namespace TaskManagementSystem.Controllers
             return new JsonResult(cr);
         }
         [HttpDelete]
+        [Route("TaskManagement/deleteProject/{id}")]
         public JsonResult deleteProject(int id)
         {
             CommonResponse cr = new CommonResponse();

@@ -2,6 +2,8 @@ https://www.youtube.com/watch?v=Dpv6lUKNL9o
 https://github.com/ArtOfEngineer/Angular10dotNETCoreAPI
 
 https://jasonwatmore.com/post/2018/05/10/angular-6-reactive-forms-validation-example
+
+https://www.c-sharpcorner.com/article/datepicker-in-angular/
 Contents:
  Install SQL Server and SQL Server Management Studio.
  Install Visual Studio. 

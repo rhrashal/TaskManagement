@@ -21,7 +21,7 @@ export class ProjectComponent implements OnInit {
   project : Project = {
     Id : 0,
     ProjectName: "",
-    ExpireDate: "",
+    ExpireDate: null,
     IsSupport:false,
   };
 
@@ -58,7 +58,7 @@ onSubmit() {
             return;
         }
         if(this.project.Id>0){
-          this.http.put<any>(environment.apiUrl+'TaskManagement/UpdateProject',this.project, this.rest.getOptions())
+          this.http.put<any>(environment.apiUrl+'TaskManagement/UpdateProject',this.registerForm.value, this.rest.getOptions())
           .subscribe(res=>{
             console.log(res); 
             this.getProjectList();      
@@ -67,7 +67,7 @@ onSubmit() {
           this.http.post<any>(environment.apiUrl+'TaskManagement/AddProject',this.registerForm.value, this.rest.getOptions())
           .subscribe(res=>{
             console.log(res); 
-            this.getProjectList();
+            this.getProjectList();           
           });    
         }
         
@@ -78,7 +78,7 @@ onSubmit() {
       //console.log(data);
       this.project.Id = data.id;
       this.project.ProjectName= data.projectName;
-      this.project.ExpireDate = new DatePipe( data.expireDate).toString();
+      this.project.ExpireDate = new Date( data.expireDate);
       this.project.IsSupport=data.isSupport;
       console.log(this.project);
      // this.registerForm.value.ProjectName = data.projectName;
@@ -95,6 +95,10 @@ onSubmit() {
         }
       }
       
+    }
+
+    resetFrom(){
+      this.project = {};
     }
 
 }

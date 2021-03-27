@@ -5,7 +5,7 @@ export class Project{
         public ProjectName? : string,
         public DepartmentId?: number,
         public CategoryId?: number,
-        public ExpireDate?: string,
+        public ExpireDate?: Date,
         public IsSupport?: boolean
          ){}
   } 

@@ -7,8 +7,9 @@ import { RouterModule } from '@angular/router';
 import {  HttpClientModule } from '@angular/common/http';
 
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component';  
 
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { routing } from "./app.routing";
 import { loginComponent } from './Login/Login.component';
 import { NotFoundComponent } from './Login/NotFound.component';
@@ -24,7 +25,8 @@ import { SprintComponent } from './Home/sprint/sprint.component';
     AppComponent,loginComponent,NotFoundComponent,HomeComponent, ProjectComponent, SprintComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule,RouterModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule,
+    BrowserModule, HttpClientModule,RouterModule, FormsModule, BrowserAnimationsModule,
+     ReactiveFormsModule,BsDatepickerModule.forRoot(),
      routing
   ],
   providers: [ AuthService, AuthGuard,RestDataSource],
