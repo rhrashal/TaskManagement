@@ -1,3 +1,90 @@
 <p>
-  sprint works!
+  Sprint 
 </p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-sm btn-primary" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
+        + Sprint</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-border">
+        <thead>
+          <tr>
+            <th scope="col">Sprint Title</th>
+            <th scope="col">Project Name</th>
+            <th scope="col">Is Support</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of SprintList">
+            <td>{{item.sprintTitle}}</td> 
+            <td>{{item.projectName}}</td>
+            <td>{{item.isSupport? 'Yes' : 'No'}}</td>
+            <td>{{item.startDate|date}}</td>
+            <td>{{item.endDate|date}}</td>
+            <td>
+              <button type="button" class="btn btn-light mr-1"    data-toggle="modal" data-target=".bd-example-modal-lg"
+               (click)="editClick(item)" data-backdrop="static" data-keyboard="false" >
+               <i class="fas fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-danger mr-1"
+              (click)="deleteProject(item.id)">
+              <i class="fas fa-trash-alt"></i>
+              </button>
+          </td>
+          </tr>         
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--Modal Start -->
+
+ <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form (ngSubmit)="onSubmit()">
+      <div class="modal-body">      
+          <div class="form-group"  [class.has-error]="SprintTitleControl.invalid && SprintTitleControl.touched" [class.has-success]="SprintTitleControl.valid">
+            <label for="recipient-name" for="SprintTitle" class="control-label">Sprint Title:</label>
+            <input type="text" required  class="form-control"   name="SprintTitle"
+            [(ngModel)]="SprintTitle" #SprintTitleControl="ngModel" >    
+            <span class="help-block"
+              *ngIf="SprintTitleControl.invalid && SprintTitleControl.touched">
+                 Full Name is required
+            </span>             
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Expire Date:</label>
+            <input type="test" class="form-control" 
+             bsDatepicker [minDate]="minDate">
+           
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Is Support:</label>
+            <input type="checkbox" class=""   >           
+          </div>       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+<!--Modal End-->
+

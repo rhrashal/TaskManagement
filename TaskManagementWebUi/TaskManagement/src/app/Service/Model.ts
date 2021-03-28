@@ -9,3 +9,17 @@ export class Project{
         public IsSupport?: boolean
          ){}
   } 
+  export class Sprint{
+    constructor(
+        public  Id? : number,
+        public  ProjectId? : number,
+        public  SprintTitle? : string,
+        public  StartDate?: Date,
+        public  EndDate?: Date,
+        public  Completed?: boolean,
+        public  Goal? : string,
+        public  PersonId? : number,
+        public  IsStart?: boolean,
+        public  IsSupport?: boolean
+         ){}
+  } 

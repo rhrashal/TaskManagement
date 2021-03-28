@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { toArray, take } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+declare var $:any;
 
 @Component({
   selector: 'app-project',
@@ -24,9 +25,11 @@ export class ProjectComponent implements OnInit {
     ExpireDate: null,
     IsSupport:false,
   };
+  minDate: Date;
 
-
-  constructor(private http : HttpClient, private rest : RestDataSource,private formBuilder: FormBuilder) { }
+  constructor(private http : HttpClient, private rest : RestDataSource,private formBuilder: FormBuilder) {
+    this.minDate = new Date();
+   }
 
   ngOnInit() {
     this.getProjectList();
@@ -46,7 +49,8 @@ export class ProjectComponent implements OnInit {
     .subscribe(res=>{
       this.projectList =[];
       this.projectList = res.results;
-      console.log(this.projectList);     
+      console.log(this.projectList);    
+
     });
   }
  
@@ -58,16 +62,19 @@ onSubmit() {
             return;
         }
         if(this.project.Id>0){
-          this.http.put<any>(environment.apiUrl+'TaskManagement/UpdateProject',this.registerForm.value, this.rest.getOptions())
+          console.log(this.project);
+          this.http.put<any>(environment.apiUrl+'TaskManagement/UpdateProject/'+ this.project.Id,this.registerForm.value, this.rest.getOptions())
           .subscribe(res=>{
             console.log(res); 
-            this.getProjectList();      
+            this.getProjectList();               
+              $('.modal').modal('hide');       
           });
         }else{
           this.http.post<any>(environment.apiUrl+'TaskManagement/AddProject',this.registerForm.value, this.rest.getOptions())
           .subscribe(res=>{
             console.log(res); 
-            this.getProjectList();           
+            this.getProjectList();   
+            $('.modal').modal('hide');           
           });    
         }
         
