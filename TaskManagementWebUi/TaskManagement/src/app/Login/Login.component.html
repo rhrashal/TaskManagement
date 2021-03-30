@@ -6,22 +6,30 @@
             <div class="login-form">
                 <div class="sign-in-htm">
                     <form novalidate #form="ngForm" (ngSubmit)="authenticate(form)">
-                        <div class="group">
+                        <div class="group"  [class.has-error]="usernameControl.invalid && submit" [class.has-success]="usernameControl.valid">
                             <label for="user" class="label">Username</label>
                             <input name="username" [(ngModel)]="username" required  
-                            id="user" type="text" class="input">
+                            id="user" type="text" class="input" #usernameControl="ngModel">
+                            <span class="help-block"
+                            *ngIf="usernameControl.invalid && submit">
+                            Username is required
+                          </span>  
                         </div>
-                        <div class="group">
+                        <div class="group" [class.has-error]="passwordControl.invalid && submit" [class.has-success]="passwordControl.valid">
                             <label for="pass" class="label">Password</label>
                             <input name="password" [(ngModel)]="password"
-                            required id="pass" type="password" class="input" data-type="password">
+                            required id="pass" type="password" class="input" data-type="password"  #passwordControl="ngModel">
+                            <span class="help-block"
+                            *ngIf="passwordControl.invalid && submit">
+                            password is required
+                          </span>  
                         </div>
                         <div class="group">
                             <input id="check" type="checkbox" class="check" checked>
                             <label for="check"><span class="icon"></span> Keep me Signed in</label>
                         </div>
                         <div class="group">
-                            <input type="submit" class="button" value="Sign In">
+                            <input type="submit" (click)="submit=true" class="button" value="Sign In">
                         </div>
                         <div class="hr"></div>
                         <div class="foot-lnk">

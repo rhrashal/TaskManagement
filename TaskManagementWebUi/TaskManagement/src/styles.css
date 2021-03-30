@@ -496,3 +496,7 @@ a {
 
 
        /* end bootstrap 3.3.6 */
+
+       .required {
+        color: red;
+    }

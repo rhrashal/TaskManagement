@@ -23,7 +23,7 @@ export class ProjectComponent implements OnInit {
     Id : 0,
     ProjectName: "",
     ExpireDate: null,
-    IsSupport:false,
+    IsSupport:false
   };
   minDate: Date;
 
@@ -61,6 +61,7 @@ onSubmit() {
         if (this.registerForm.invalid) {
             return;
         }
+        console.log(this.registerForm.value);
         if(this.project.Id>0){
           console.log(this.project);
           this.http.put<any>(environment.apiUrl+'TaskManagement/UpdateProject/'+ this.project.Id,this.registerForm.value, this.rest.getOptions())

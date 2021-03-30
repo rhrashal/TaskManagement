@@ -56,31 +56,54 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form (ngSubmit)="onSubmit()">
+      <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
       <div class="modal-body">      
-          <div class="form-group"  [class.has-error]="SprintTitleControl.invalid && SprintTitleControl.touched" [class.has-success]="SprintTitleControl.valid">
-            <label for="recipient-name" for="SprintTitle" class="control-label">Sprint Title:</label>
+          <div class="form-group"  [class.has-error]="SprintTitleControl.invalid && SprintTitleControl.touched || SprintTitleControl.invalid && submitted" [class.has-success]="SprintTitleControl.valid">
+            <label for="SprintTitle" class="control-label">Sprint Title:  <span class="required">*</span>  </label>
             <input type="text" required  class="form-control"   name="SprintTitle"
-            [(ngModel)]="SprintTitle" #SprintTitleControl="ngModel" >    
+            [(ngModel)]="Sprint.SprintTitle" #SprintTitleControl="ngModel" >    
             <span class="help-block"
-              *ngIf="SprintTitleControl.invalid && SprintTitleControl.touched">
-                 Full Name is required
+              *ngIf="SprintTitleControl.invalid && SprintTitleControl.touched || SprintTitleControl.invalid && submitted">
+              Sprint Title is required
             </span>             
           </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Expire Date:</label>
-            <input type="test" class="form-control" 
-             bsDatepicker [minDate]="minDate">
-           
+          <div class="form-group"  [class.has-error]="ProjectId.invalid && ProjectId.touched || ProjectId.invalid && submitted" [class.has-success]="ProjectId.valid">          
+            <label for="ProjectId" class="control-label"> Project: <span class="required">*</span></label>
+            <select name="ProjectId" #ProjectId="ngModel" [(ngModel)]="Sprint.ProjectId" required class="form-control">
+             <option selected  value="0" >-Choose Project-</option>
+              <option *ngFor="let item of projectList" value="{{item.id}}">{{item.projectName}}</option>                
+            </select>
+            <span class="help-block"
+            *ngIf="ProjectId.invalid && ProjectId.touched || ProjectId.invalid && submitted">
+              Project is required
+          </span>  
+        </div>
+          <div class="form-group"  [class.has-error]="SprintStartDate.invalid && SprintStartDate.touched || SprintStartDate.invalid && submitted" [class.has-success]="SprintStartDate.valid">
+            <label for="SprintStartDate" class="control-label">Start Date:  <span class="required">*</span></label>
+            <input type="test" class="form-control" required   bsDatepicker [minDate]="minDate"  name="SprintStartDate"
+             [(ngModel)]="Sprint.SprintStartDate" #SprintStartDate="ngModel" (blur)="dateChange()">
+             <span class="help-block"
+             *ngIf="SprintStartDate.invalid && SprintStartDate.touched || SprintStartDate.invalid && submitted">
+             Start Date is required
+           </span>  
           </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Is Support:</label>
-            <input type="checkbox" class=""   >           
+          <div class="form-group"  [class.has-error]="SprintEndDate.invalid && SprintEndDate.touched || SprintEndDate.invalid && submitted" [class.has-success]="SprintEndDate.valid">
+            <label for="SprintEndDate" class="control-label">End Date:  <span class="required">*</span></label>
+            <input type="test" class="form-control" required   bsDatepicker [minDate]="minDateEnd"  name="SprintEndDate"
+             [(ngModel)]="Sprint.SprintEndDate" #SprintEndDate="ngModel">
+             <span class="help-block"
+             *ngIf="SprintEndDate.invalid && SprintEndDate.touched || SprintEndDate.invalid && submitted">
+             End Date is required
+           </span>  
+          </div>
+          <div class="form-group" >
+            <input type="checkbox" class="" name="IsSupport"   [(ngModel)]="Sprint.IsSupport" #IsSupport="ngModel"  >           
+            <label for="IsSupport" class="control-label">&nbsp;&nbsp; Is Support</label>
           </div>       
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+        <button type="submit" (click)="submitted=true" class="btn btn-sm btn-primary">Save</button>
       </div>
     </form>
     </div>

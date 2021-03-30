@@ -29,6 +29,7 @@ namespace TaskManagementSystem
         {
             services.AddMvc();
             services.AddControllers();
+
             services.AddSingleton<IConfiguration>(Configuration);
             //for Entity Freamwork
             services.AddDbContext<ApplicationDbContext>(options =>

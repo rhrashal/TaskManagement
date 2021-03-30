@@ -118,8 +118,8 @@ namespace TaskManagementSystem.Controllers
             return new JsonResult(cr);
         }
         [HttpPost]
-        [Route("[controller]/[action]")]
-        public JsonResult AddSprint(Sprint sprint)
+        [Route("TaskManagement/AddSprint")]
+        public JsonResult AddSprint([FromBody] Sprint sprint)
         {
             CommonResponse cr = new CommonResponse();
             try
@@ -129,6 +129,8 @@ namespace TaskManagementSystem.Controllers
                 {
                     throw new Exception("Sprint Already Exist.");
                 }
+                sprint.StartDate = Convert.ToDateTime(sprint.SprintStartDate);
+                sprint.EndDate = Convert.ToDateTime(sprint.SprintEndDate);
                 sprint.AddDate = DateTime.Now;
                 sprint.AddBy = User.Identity.Name;
                 sprint.SetDate();
@@ -143,17 +145,17 @@ namespace TaskManagementSystem.Controllers
             return new JsonResult(cr);
         }
         [HttpPut]
-        [Route("TaskManagement/UpdateSprint/{id}")]
-        public JsonResult UpdateSprint(int id, Sprint sprint)
+        [Route("TaskManagement/UpdateSprint")]
+        public JsonResult UpdateSprint(Sprint sprint)
         {
             CommonResponse cr = new CommonResponse();
             try
             {
-                var pro = _context.Sprint.Where(e => e.Id == id).FirstOrDefault();
+                var pro = _context.Sprint.Where(e => e.Id == sprint.Id).FirstOrDefault();
                 pro.ProjectId = sprint.ProjectId;
                 pro.SprintTitle = sprint.SprintTitle;
-                pro.StartDate = sprint.StartDate;
-                pro.EndDate = sprint.EndDate;
+                pro.StartDate = Convert.ToDateTime(sprint.SprintStartDate);
+                pro.EndDate = Convert.ToDateTime(sprint.SprintEndDate);
                 pro.Status = sprint.Status;
                 pro.UpdateDate = DateTime.Now;
                 pro.UpdateBy = User.Identity.Name;

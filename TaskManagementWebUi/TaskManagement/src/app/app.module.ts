@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import {  HttpClientModule } from '@angular/common/http';
 
 
+import { ToastrModule } from 'ngx-toastr';
+
 import { AppComponent } from './app.component';  
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -26,7 +28,11 @@ import { SprintComponent } from './Home/sprint/sprint.component';
   ],
   imports: [
     BrowserModule, HttpClientModule,RouterModule, FormsModule, BrowserAnimationsModule,
-     ReactiveFormsModule,BsDatepickerModule.forRoot(),
+     ReactiveFormsModule,BsDatepickerModule.forRoot(),ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
      routing
   ],
   providers: [ AuthService, AuthGuard,RestDataSource],

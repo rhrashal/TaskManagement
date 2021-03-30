@@ -14,12 +14,15 @@ export class Project{
         public  Id? : number,
         public  ProjectId? : number,
         public  SprintTitle? : string,
-        public  StartDate?: Date,
-        public  EndDate?: Date,
+        public  StartDate?: string,
+        public  EndDate?: string,
         public  Completed?: boolean,
         public  Goal? : string,
         public  PersonId? : number,
         public  IsStart?: boolean,
-        public  IsSupport?: boolean
+        public  IsSupport?: boolean,
+        public SprintStartDate? : string,
+        public SprintEndDate?:string
+
          ){}
   } 
