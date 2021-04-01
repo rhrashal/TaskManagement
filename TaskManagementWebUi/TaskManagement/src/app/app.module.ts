@@ -9,6 +9,7 @@ import {  HttpClientModule } from '@angular/common/http';
 
 import { ToastrModule } from 'ngx-toastr';
 import { BlockUIModule } from 'ng-block-ui';
+import { JwPaginationComponent } from 'jw-angular-pagination';
 import { AppComponent } from './app.component';  
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -24,7 +25,8 @@ import { SprintComponent } from './Home/sprint/sprint.component';
 
 @NgModule({
   declarations: [
-    AppComponent,loginComponent,NotFoundComponent,HomeComponent, ProjectComponent, SprintComponent
+    AppComponent,loginComponent,NotFoundComponent,HomeComponent, ProjectComponent, SprintComponent,
+    JwPaginationComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,RouterModule, FormsModule, BrowserAnimationsModule,

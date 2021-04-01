@@ -39,3 +39,6 @@ https://sweetalert2.github.io/
 
 ##Block-Ui=>
 https://www.npmjs.com/package/ng-block-ui
+
+##Pagnation =>
+https://jasonwatmore.com/post/2018/04/26/npm-jw-angular-pagination-component

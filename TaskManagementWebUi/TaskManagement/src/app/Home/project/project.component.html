@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of projectList">
+          <tr *ngFor="let item of pageOfItems">
             <td>{{item.projectName}}</td>
             <td>{{item.isSupport? 'Yes' : 'No'}}</td>
             <td>{{item.expireDate|date}}</td>
@@ -42,7 +42,9 @@
     </div>
   </div>
 </div>
-
+<div class="card-footer pb-0 pt-3">
+  <jw-pagination [items]="projectList" (changePage)="onChangePage($event)"></jw-pagination>
+</div>
 <!--Modal Start -->
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

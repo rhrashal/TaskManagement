@@ -26,7 +26,7 @@ export class ProjectComponent implements OnInit {
     IsSupport:false
   };
   minDate: Date;
-
+  pageOfItems: Array<any>;
   constructor(private http : HttpClient, private rest : RestDataSource,private formBuilder: FormBuilder) {
     this.minDate = new Date();
    }
@@ -54,6 +54,10 @@ export class ProjectComponent implements OnInit {
     });
   }
  
+  onChangePage(pageOfItems: Array<Project>) {
+    // update current page of items
+    this.pageOfItems = pageOfItems;
+}
 
 onSubmit() {
         this.submitted = true;
