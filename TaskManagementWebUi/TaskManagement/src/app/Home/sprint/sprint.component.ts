@@ -5,6 +5,8 @@ import { RestDataSource } from 'src/app/Service/data.Service';
 import { Sprint } from 'src/app/Service/Model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 declare var $:any;
 
 @Component({
@@ -12,6 +14,7 @@ declare var $:any;
   templateUrl: './sprint.component.html'
 })
 export class SprintComponent implements OnInit {
+  @BlockUI() blockUI : NgBlockUI;
 
   submitted:boolean = false;
   SprintList:any = []
@@ -37,8 +40,11 @@ export class SprintComponent implements OnInit {
   }
 
   ngOnInit() {
+   this.blockUI.start("loading..");
     this.getProjectList();
-    this.getSprintList();
+    this.getSprintList();    
+    this.blockUI.stop();
+
   }
 
 dateChange(){
@@ -68,32 +74,44 @@ dateChange(){
   onSubmit(form: NgForm) {
     if (form.invalid) {
       console.log(this.Sprint); 
-      this.toastr.warning("Fill Requred Field",'Status!');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Fill Requred Field!',
+        footer: '<a href>Why do I have this issue?</a>'
+      })
+      // this.toastr.warning("",'Status!');
       return;
     }    
     this.Sprint.ProjectId = Number(this.Sprint.ProjectId)
     console.log(this.Sprint); 
     console.log(this.rest.getOptions());
+    this.blockUI.start('Loading...');
     if(this.Sprint.Id>0){
       console.log(this.Sprint);
       this.http.put<any>(environment.apiUrl+'TaskManagement/UpdateSprint', this.Sprint, this.rest.getOptions())
       .subscribe(res=>{
         console.log(res); 
         this.getSprintList();               
-          $('.modal').modal('hide');       
+          $('.modal').modal('hide'); 
+          this.blockUI.stop();      
       },error=>{
         console.log(error); 
+        this.blockUI.stop();      
       });
     }else{
       this.http.post<any>(environment.apiUrl+'TaskManagement/AddSprint',JSON.stringify(this.Sprint), this.rest.getOptions())
       .subscribe(res=>{
         console.log(res); 
         this.getSprintList();   
-        $('.modal').modal('hide');           
+        $('.modal').modal('hide');   
+        this.blockUI.stop();              
       },error=>{
         console.log(error); 
+        this.blockUI.stop();      
       });    
-    }      
+    }
+    
 }
 
   resetFrom(){
@@ -103,6 +121,10 @@ dateChange(){
 
 
   editClick(data){
+    this.blockUI.start('Loading...'); // Start blocking
+    setTimeout(() => {
+      this.blockUI.stop(); // Stop blocking
+    },500);
     console.log(data);    
     this.Sprint.Id = data.id;
     this.Sprint.SprintTitle =  data.sprintTitle;
@@ -113,55 +135,43 @@ dateChange(){
     console.log(this.Sprint);
   }
 
-  deleteProject(id){
-    if(confirm('Are you sure??')){
-      if(id > 0){
-        this.http.delete<any>(environment.apiUrl+'TaskManagement/deleteSprint/'+ id, this.rest.getOptions())
-          .subscribe(res=>{
-            console.log(res); 
-            this.getProjectList();
-          }); 
+
+
+    deleteProject(id){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this imaginary file!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+
+        if(id > 0){
+          this.http.delete<any>(environment.apiUrl+'TaskManagement/deleteSprint/'+ id, this.rest.getOptions())
+            .subscribe(res=>{
+              console.log(res); 
+              this.getSprintList();   
+              Swal.fire(
+                'Deleted!',
+                'Your imaginary file has been deleted.',
+                'success'
+              )
+            },error=>{
+              Swal.fire(
+                'Your imaginary file is safe :'+ error.message +')',
+              )
+            }); 
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
       }
-    }
+    })
     
   }
-
-
-    // deleteProject(id){
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: 'You will not be able to recover this imaginary file!',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Yes, delete it!',
-  //     cancelButtonText: 'No, keep it'
-  //   }).then((result) => {
-  //     if (result.value) {
-
-  //       if(id > 0){
-  //         this.http.delete<any>(environment.apiUrl+'TaskManagement/deleteSprint/'+ id, this.rest.getOptions())
-  //           .subscribe(res=>{
-  //             console.log(res); 
-  //             this.getProjectList();
-  //             Swal.fire(
-  //               'Deleted!',
-  //               'Your imaginary file has been deleted.',
-  //               'success'
-  //             )
-  //           },error=>{
-  //             Swal.fire(
-  //               'Your imaginary file is safe :'+ error.message +')',
-  //             )
-  //           }); 
-  //       }
-  //     } else if (result.dismiss === Swal.DismissReason.cancel) {
-  //       Swal.fire(
-  //         'Cancelled',
-  //         'Your imaginary file is safe :)',
-  //         'error'
-  //       )
-  //     }
-  //   })
-    
-  // }
 }

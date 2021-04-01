@@ -28,7 +28,7 @@ export class loginComponent {
           }
           this.errorMessage = "Authentication Failed";
         },error =>{
-          this.toastr.error("Invalid username or password!");
+          this.toastr.error(error.message);
         })
     } else {
       this.errorMessage = "Form Data Invalid";

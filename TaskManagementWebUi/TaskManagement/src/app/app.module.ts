@@ -8,7 +8,7 @@ import {  HttpClientModule } from '@angular/common/http';
 
 
 import { ToastrModule } from 'ngx-toastr';
-
+import { BlockUIModule } from 'ng-block-ui';
 import { AppComponent } from './app.component';  
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -32,8 +32,7 @@ import { SprintComponent } from './Home/sprint/sprint.component';
       timeOut: 3000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-    }),
-     routing
+    }),  BlockUIModule.forRoot(),  routing
   ],
   providers: [ AuthService, AuthGuard,RestDataSource],
   bootstrap: [AppComponent]
