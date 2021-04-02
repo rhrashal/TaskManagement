@@ -8,7 +8,7 @@
     <h3>Task <span>Management</span></h3>
   </div>
   <div class="right_area">
-    <a href="#" (click)="logedOut()" class="logout_btn">Logout</a>
+    <a href="#" (click)="logedOut()" class="logout_btn"><i class="fas fa-sign-out-alt"></i></a>
   </div>
 </header>
 <!--header area end-->
@@ -34,12 +34,18 @@
     <img src="./assets/2.jpg" class="profile_image" alt="">
     <h4>Robiul Hossain</h4>
   </div>
+
+
+
   <a href="#"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
   <a href="#"><i class="fas fa-cogs"></i><span>Components</span></a>
-  <a href="#" [routerLink]=""><i class="fas fa-table"></i><span>Tables</span></a>
-  <a href="#" [routerLink]="['/Home/Project']"><i class="fas fa-th"></i><span>Project</span></a>
-  <a href="#" [routerLink]="['/Home/Sprint']"><i class="fas fa-info-circle"></i><span>Sprint</span></a>
-  <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+  <a href="#" [routerLink]=""><i class="fas fa-cogs"></i><span>Tables</span></a>  
+  <a href="#" [routerLink]="['/Home/Project']"><i class="fas fa-cogs"></i><span>Project</span></a>
+  <a href="#" [routerLink]="['/Home/Sprint']"><i class="fas fa-cogs"></i><span>Sprint</span></a>
+  <a href="#"><i class="fas fa-sliders-h"></i><span>Employee</span></a>
+  <a href="#"><i class="fas fa-sliders-h"></i><span>Designation</span></a>
+  <a href="#"><i class="fas fa-sliders-h"></i><span>Department</span></a>
+  <a href="#"><i class="fas fa-sliders-h"></i><span>Categary</span></a>
 </div>
 <!--sidebar end-->
 

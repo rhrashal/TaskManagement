@@ -1,14 +1,12 @@
-<p>
-  project
-</p>
-
 <div class="container">
-  <div class="row">
+  <div class="row card-footer">
+    <div class="col-md-2">
+      <H4><strong>Project</strong></H4>      
+    </div>
       <div class="col-md-3">
         <input type="text"   [(ngModel)]="filterData"   class="form-control" placeholder="Search" >
-        {{filterData}}
       </div>
-      <div class="col-md-9">
+      <div class="col-md-7">
         <button type="button" class="btn btn-sm btn-primary float-right" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
           <i class="fa fa-plus-circle" aria-hidden="true"></i> Project</button>
       </div>
@@ -31,12 +29,11 @@
             <td>{{item.isSupport? 'Yes' : 'No'}}</td>
             <td>{{item.expireDate|date}}</td>
             <td>
-              <button type="button" class="btn btn-light mr-1"    data-toggle="modal" data-target=".bd-example-modal-lg"
+              <button type="button" class="btn mr-1" style="color: rgb(41, 6, 241);"   data-toggle="modal" data-target=".bd-example-modal-lg"
                (click)="editClick(item)" data-backdrop="static" data-keyboard="false" >
                <i class="fas fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-danger mr-1"
-              (click)="deleteProject(item.id)">
+              <button type="button" class="btn mr-1" style="color: red;"  (click)="deleteProject(item.id)">
               <i class="fas fa-trash-alt"></i>
               </button>
           </td>
@@ -47,7 +44,7 @@
   </div>
 </div>
 <div class="pb-0 pt-0">
-  <jw-pagination [items]="projectList" (changePage)="onChangePage($event)"></jw-pagination>
+  <jw-pagination [items]="projectList" (changePage)="onChangePage($event)" [pageSize]="8" [maxPages]="6"></jw-pagination>
 </div>
 <!--Modal Start -->
 

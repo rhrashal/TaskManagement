@@ -1,3 +1,4 @@
+
 /* You can add global styles to this file, and also import other style files */
 /* Layout css block start */
 body{
@@ -5,7 +6,10 @@ body{
     padding: 0;
     font-family: "Roboto", sans-serif;
   }
-  
+  a{
+    cursor: pointer;
+  }
+
   header{
     z-index: 1;
     position: fixed;
@@ -22,6 +26,7 @@ body{
     text-transform: uppercase;
     font-size: 22px;
     font-weight: 900;
+    margin-top: -15px;
   }
   
   .left_area span{
@@ -30,12 +35,12 @@ body{
   
   .logout_btn {
     padding: 3px;
-    background: #19B3D3;
+    /* background: #19B3D3; */
     text-decoration: none;
     float: right;
-    margin-top: -48px;
-    margin-right: 25px;
-    border-radius: 2px;
+    margin-top: -32px;
+    margin-right: 4px;
+    border-radius: 4px;
     font-size: 15px;
     font-weight: 600;
     color: #fff;
@@ -142,6 +147,7 @@ body{
     background-position: center;
     background-size: cover;
     /* height: 130vh; */
+    height: 830px;
     transition: 0.5s;
   }
   
@@ -500,3 +506,12 @@ a {
        .required {
         color: red;
     }
+
+
+    .card-footer {
+      padding: .75rem 1.25rem!important;
+      background-color: rgb(47 50 58)!important;
+      border-top: 1px solid rgb(221 102 0 / 0%)!important;
+      border-radius: 10px!important;
+      color: wheat!important;
+  }

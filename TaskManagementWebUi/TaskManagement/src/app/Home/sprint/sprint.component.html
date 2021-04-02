@@ -1,13 +1,12 @@
-<p>
-  Sprint 
-</p>
 <div class="container">
-  <div class="row">
+  <div class="row card-footer">
+    <div class="col-md-2">
+      <H4><strong>Sprint</strong></H4>      
+    </div>
       <div class="col-md-3">
         <input type="text"   [(ngModel)]="filterData"   class="form-control" placeholder="Search" >
-        {{filterData}}
       </div>
-      <div class="col-md-9">
+      <div class="col-md-7">
         <button type="button" class="btn btn-sm btn-primary float-right" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
           <i class="fa fa-plus-circle" aria-hidden="true"></i> Sprint</button>  
       </div>

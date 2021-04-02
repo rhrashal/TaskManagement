@@ -45,3 +45,6 @@ https://jasonwatmore.com/post/2018/04/26/npm-jw-angular-pagination-component
 
 ##Filter => 
 https://stackoverflow.com/questions/46780843/angular-4-filter-search-custom-pipe
+
+
+https://www.codingnepalweb.com/
