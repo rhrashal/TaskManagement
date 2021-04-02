@@ -3,10 +3,13 @@
 </p>
 <div class="container">
   <div class="row">
-    <div class="col">
-      <button type="button" class="btn btn-sm btn-primary" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
-        + Sprint</button>
-    </div>
+      <div class="col-md-3">
+        <input type="text"     class="form-control" placeholder="Search" >
+      </div>
+      <div class="col-md-9">
+        <button type="button" class="btn btn-sm btn-primary float-right" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
+          <i class="fa fa-plus-circle" aria-hidden="true"></i> Sprint</button>  
+      </div>
   </div>
   <div class="row">
     <div class="col-md-12">
@@ -29,12 +32,11 @@
             <td>{{item.startDate|date}}</td>
             <td>{{item.endDate|date}}</td>
             <td>
-              <button type="button" class="btn btn-light mr-1"    data-toggle="modal" data-target=".bd-example-modal-lg"
+              <button type="button" class="btn mr-1" style="color: rgb(41, 6, 241);"    data-toggle="modal" data-target=".bd-example-modal-lg"
                (click)="editClick(item)" data-backdrop="static" data-keyboard="false" >
                <i class="fas fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-danger mr-1"
-              (click)="deleteProject(item.id)">
+              <button type="button" class="btn mr-1" style="color: red;"    (click)="deleteProject(item.id)">
               <i class="fas fa-trash-alt"></i>
               </button>
           </td>

@@ -17,6 +17,7 @@ export class SprintComponent implements OnInit {
   @BlockUI() blockUI : NgBlockUI;
 
   submitted:boolean = false;
+  filterSprint;
   SprintList:any = []
   Sprint : Sprint = {
     Id : 0,
@@ -44,8 +45,10 @@ export class SprintComponent implements OnInit {
     this.getProjectList();
     this.getSprintList();    
     this.blockUI.stop();
-
+    
   }
+
+
 
 dateChange(){
   this.minDateEnd = new Date(this.Sprint.StartDate);

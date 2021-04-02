@@ -5,8 +5,8 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <button type="button" class="btn btn-sm btn-primary" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
-        + Project</button>
+      <button type="button" class="btn btn-sm btn-primary float-right" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i> Project</button>
     </div>
   </div>
   <div class="row">
@@ -42,7 +42,7 @@
     </div>
   </div>
 </div>
-<div class="card-footer pb-0 pt-3">
+<div class="pb-0 pt-0">
   <jw-pagination [items]="projectList" (changePage)="onChangePage($event)"></jw-pagination>
 </div>
 <!--Modal Start -->

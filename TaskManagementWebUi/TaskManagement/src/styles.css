@@ -28,20 +28,20 @@ body{
     color: #19B3D3;
   }
   
-  .logout_btn{
-    padding: 5px;
+  .logout_btn {
+    padding: 3px;
     background: #19B3D3;
     text-decoration: none;
     float: right;
-    margin-top: -30px;
-    margin-right: 40px;
+    margin-top: -48px;
+    margin-right: 25px;
     border-radius: 2px;
     font-size: 15px;
     font-weight: 600;
     color: #fff;
     transition: 0.5s;
     transition-property: background;
-  }
+}
   
   .logout_btn:hover{
     background: #0B87A6;
@@ -141,7 +141,7 @@ body{
     background-color: rgb(137 215 212);
     background-position: center;
     background-size: cover;
-    height: 130vh;
+    /* height: 130vh; */
     transition: 0.5s;
   }
   
