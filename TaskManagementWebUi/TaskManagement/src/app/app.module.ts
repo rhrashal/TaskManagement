@@ -22,11 +22,13 @@ import { AuthGuard } from './Service/auth.guard';
 import { RestDataSource } from './Service/data.Service';
 import { ProjectComponent } from './Home/project/project.component';
 import { SprintComponent } from './Home/sprint/sprint.component';
+import { DataFilterPipe } from './Service/data-filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,loginComponent,NotFoundComponent,HomeComponent, ProjectComponent, SprintComponent,
-    JwPaginationComponent
+    JwPaginationComponent,
+    DataFilterPipe
   ],
   imports: [
     BrowserModule, HttpClientModule,RouterModule, FormsModule, BrowserAnimationsModule,

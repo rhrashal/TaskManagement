@@ -17,7 +17,7 @@ export class SprintComponent implements OnInit {
   @BlockUI() blockUI : NgBlockUI;
 
   submitted:boolean = false;
-  filterSprint;
+  filterData:string;
   SprintList:any = []
   Sprint : Sprint = {
     Id : 0,

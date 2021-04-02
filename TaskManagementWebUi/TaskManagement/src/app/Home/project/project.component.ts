@@ -1,12 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { RestDataSource } from 'src/app/Service/data.Service';
 import { Project } from 'src/app/Service/Model';
 import { environment } from 'src/environments/environment';
-import { toArray, take } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 declare var $:any;
 
 @Component({
@@ -25,6 +22,7 @@ export class ProjectComponent implements OnInit {
     ExpireDate: null,
     IsSupport:false
   };
+  filterData:string;
   minDate: Date;
   pageOfItems: Array<any>;
   constructor(private http : HttpClient, private rest : RestDataSource,private formBuilder: FormBuilder) {
