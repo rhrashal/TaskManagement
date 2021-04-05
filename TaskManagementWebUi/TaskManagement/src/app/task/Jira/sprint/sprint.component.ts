@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { RestDataSource } from 'src/app/Service/data.Service';
+import { DataService } from 'src/app/Service/data.service';
 import { Sprint } from 'src/app/Service/Model';
 import { environment } from 'src/environments/environment';
-import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { FilterDataPipe } from 'src/app/service/filter-data.pipe';
+import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 declare var $:any;
 
@@ -14,10 +15,10 @@ declare var $:any;
   templateUrl: './sprint.component.html'
 })
 export class SprintComponent implements OnInit {
+
   @BlockUI() blockUI : NgBlockUI;
 
   submitted:boolean = false;
-  filterData:string;
   SprintList:any = []
   Sprint : Sprint = {
     Id : 0,
@@ -35,7 +36,7 @@ export class SprintComponent implements OnInit {
   minDate:Date = new Date;
   minDateEnd:Date = new Date;
 
-  constructor(private http : HttpClient, private rest : RestDataSource,private toastr: ToastrService) { 
+  constructor(private http : HttpClient, private rest : DataService,private toastr: ToastrService) { 
 
     this.Sprint = new Sprint()
   }
@@ -48,8 +49,17 @@ export class SprintComponent implements OnInit {
     
   }
 
-
-
+  
+  filterPipe = new FilterDataPipe();
+  filterText:string=""; 
+  fiteredArr :any=[];
+  filterFunction(){
+     this.fiteredArr = this.filterPipe.transform(this.SprintList,this.filterText); 
+  }
+  pageOfItems: Array<any>;
+  onChangePage(pageOfItems: Array<Sprint>) {
+    this.pageOfItems = pageOfItems;
+}
 dateChange(){
   this.minDateEnd = new Date(this.Sprint.StartDate);
   console.log(this.minDateEnd);
@@ -60,8 +70,9 @@ dateChange(){
     .subscribe(res=>{
       this.SprintList =[];
       this.SprintList = res.results;
-      console.log(this.SprintList);    
-      this.toastr.show(this.SprintList.length+ " Data found",'Status!');
+      console.log(this.SprintList); 
+      this.filterFunction();   
+     //this.toastr.success(this.SprintList.length+ " Data found",'Status!');
     });
   }
 
@@ -87,8 +98,8 @@ dateChange(){
       return;
     }    
     this.Sprint.ProjectId = Number(this.Sprint.ProjectId)
-    console.log(this.Sprint); 
-    console.log(this.rest.getOptions());
+   // console.log(this.Sprint); 
+    //console.log(this.rest.getOptions());
     this.blockUI.start('Loading...');
     if(this.Sprint.Id>0){
       console.log(this.Sprint);
@@ -97,17 +108,19 @@ dateChange(){
         console.log(res); 
         this.getSprintList();               
           $('.modal').modal('hide'); 
-          this.blockUI.stop();      
+          this.blockUI.stop();    
+          this.toastr.success("Successfully updated", "Status")    
       },error=>{
         console.log(error); 
-        this.blockUI.stop();      
+       this.blockUI.stop();      
       });
     }else{
       this.http.post<any>(environment.apiUrl+'TaskManagement/AddSprint',JSON.stringify(this.Sprint), this.rest.getOptions())
       .subscribe(res=>{
         console.log(res); 
         this.getSprintList();   
-        $('.modal').modal('hide');   
+        $('.modal').modal('hide'); 
+        this.toastr.success("Save successfull.", "Status")   
         this.blockUI.stop();              
       },error=>{
         console.log(error); 
@@ -124,11 +137,7 @@ dateChange(){
 
 
   editClick(data){
-    this.blockUI.start('Loading...'); // Start blocking
-    setTimeout(() => {
-      this.blockUI.stop(); // Stop blocking
-    },500);
-    console.log(data);    
+     console.log(data);    
     this.Sprint.Id = data.id;
     this.Sprint.SprintTitle =  data.sprintTitle;
     this.Sprint.ProjectId= data.projectId;
@@ -177,4 +186,5 @@ dateChange(){
     })
     
   }
+
 }

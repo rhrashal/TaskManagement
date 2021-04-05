@@ -1,18 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { RestDataSource } from 'src/app/Service/data.Service';
-import { Project } from 'src/app/Service/Model';
 import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataService } from 'src/app/Service/data.service';
+import { Project } from 'src/app/Service/model';
+
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { FilterDataPipe } from 'src/app/service/filter-data.pipe';
+import { ToastrService } from 'ngx-toastr';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+
 declare var $:any;
+
 
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html'
-  // ,
-  // styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
   registerForm: FormGroup;
   submitted = false;
   projectList:any = []
@@ -22,16 +28,16 @@ export class ProjectComponent implements OnInit {
     ExpireDate: null,
     IsSupport:false
   };
-  filterData:string;
+
   minDate: Date;
-  pageOfItems: Array<any>;
-  constructor(private http : HttpClient, private rest : RestDataSource,private formBuilder: FormBuilder) {
+
+
+  constructor(private http : HttpClient, private rest : DataService,private formBuilder: FormBuilder,private toastr: ToastrService) {
     this.minDate = new Date();
    }
 
   ngOnInit() {
-    this.getProjectList();
-
+    this.getProjectList();    
     this.registerForm = this.formBuilder.group({
       ProjectName: ['', Validators.required],
       ExpireDate: ['', Validators.required],
@@ -41,6 +47,12 @@ export class ProjectComponent implements OnInit {
  // convenience getter for easy access to form fields
     get f() { return this.registerForm.controls; }
 
+    filterText:string=""; 
+    filterPipe = new FilterDataPipe();
+    fiteredArr :any=[];
+    filterFunction(){
+       this.fiteredArr = this.filterPipe.transform(this.projectList,this.filterText); //https://stackoverflow.com/questions/39653630/how-to-use-pipe-in-ts-not-html/50693592
+    }
 
   getProjectList(){
     this.http.get<any>(environment.apiUrl+'TaskManagement/GetAllProject', this.rest.getOptions())
@@ -48,19 +60,20 @@ export class ProjectComponent implements OnInit {
       this.projectList =[];
       this.projectList = res.results;
       console.log(this.projectList);    
-
+      this.filterFunction();
+      //this.toastr.success(this.projectList.length + " Data found", "Status")
     });
   }
- 
+
+pageOfItems: Array<any>;
   onChangePage(pageOfItems: Array<Project>) {
-    // update current page of items
     this.pageOfItems = pageOfItems;
 }
 
 onSubmit() {
         this.submitted = true;
         // stop here if form is invalid
-        if (this.registerForm.invalid) {
+        if (this.registerForm.invalid) {          
             return;
         }
         console.log(this.registerForm.value);
@@ -70,14 +83,16 @@ onSubmit() {
           .subscribe(res=>{
             console.log(res); 
             this.getProjectList();               
-              $('.modal').modal('hide');       
+              $('.modal').modal('hide');     
+              this.toastr.success("Successfully updated", "Status")  
           });
         }else{
           this.http.post<any>(environment.apiUrl+'TaskManagement/AddProject',this.registerForm.value, this.rest.getOptions())
           .subscribe(res=>{
             console.log(res); 
             this.getProjectList();   
-            $('.modal').modal('hide');           
+            $('.modal').modal('hide');  
+            this.toastr.success("Save successfull.", "Status")         
           });    
         }
         
@@ -85,30 +100,76 @@ onSubmit() {
     }
 
     editClick(data){
+      this.blockUI.start(); // Start blocking
+ 
+      // setTimeout(() => {
+      //   this.blockUI.stop();// Stop blocking
+      // },200);
       //console.log(data);
       this.project.Id = data.id;
       this.project.ProjectName= data.projectName;
       this.project.ExpireDate = new Date( data.expireDate);
       this.project.IsSupport=data.isSupport;
       console.log(this.project);
+      this.blockUI.stop();
      // this.registerForm.value.ProjectName = data.projectName;
     }
 
-    deleteProject(id){
-      if(confirm('Are you sure??')){
+    // deleteProject(id){
+    //   if(confirm('Are you sure??')){
+    //     if(id > 0){
+    //       this.http.delete<any>(environment.apiUrl+'TaskManagement/deleteProject/'+ id, this.rest.getOptions())
+    //         .subscribe(res=>{
+    //           console.log(res); 
+    //           this.getProjectList();
+    //         }); 
+    //     }
+    //   }
+      
+    // }
+
+  deleteProject(id){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this imaginary file!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.blockUI.start();
         if(id > 0){
           this.http.delete<any>(environment.apiUrl+'TaskManagement/deleteProject/'+ id, this.rest.getOptions())
             .subscribe(res=>{
               console.log(res); 
-              this.getProjectList();
+              this.getProjectList(); 
+              Swal.fire(
+                'Deleted!',
+                'Your imaginary file has been deleted.',
+                'success'
+              )
+              this.blockUI.stop();
+            },error=>{
+              Swal.fire(
+                'Your imaginary file is safe :'+ error.message +')',
+              )
+              this.blockUI.stop();
             }); 
         }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
       }
-      
-    }
+    })
+    
+  }
+
 
     resetFrom(){
       this.project = {};
     }
-
 }

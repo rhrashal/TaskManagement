@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'dataFilter'
+  name: 'filterData'
 })
-export class DataFilterPipe implements PipeTransform {
+export class FilterDataPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
 

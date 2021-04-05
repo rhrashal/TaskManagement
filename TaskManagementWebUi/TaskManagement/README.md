@@ -1,6 +1,6 @@
 # TaskManagement
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.7.
 
 ## Development server
 
@@ -24,27 +24,27 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-##=============================================================
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## =============================================================
 
-##ngx-bootstrap =>
+## ngx-bootstrap =>Datepicar
 https://valor-software.com/ngx-bootstrap/#/documentation#getting-started
 
-##toaster=>
+## toaster=>
 https://www.npmjs.com/package/ngx-toastr
 
-##Sweetalert=>
+## Sweetalert=>
 https://www.itsolutionstuff.com/post/how-to-use-sweetalert2-in-angularexample.html
 https://sweetalert2.github.io/
 
-##Block-Ui=>
+## Block-Ui=>
 https://www.npmjs.com/package/ng-block-ui
 
-##Pagnation =>
+## Pagnation =>
 https://jasonwatmore.com/post/2018/04/26/npm-jw-angular-pagination-component
 
-##Filter => 
+## Filter => 
 https://stackoverflow.com/questions/46780843/angular-4-filter-search-custom-pipe
 
-
+https://www.ag-grid.com/angular-grid/getting-started/
 https://www.codingnepalweb.com/
