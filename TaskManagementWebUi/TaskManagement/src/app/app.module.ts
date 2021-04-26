@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TaskComponent } from './task/task.component';
-import { EmpCategoryComponent } from './task/Employee/emp-category/emp-category.component';//https://jasonwatmore.com/post/2018/04/26/npm-jw-angular-pagination-component
+import { EmpCategoryComponent } from './task/Employee/emp-category/emp-category.component';
 import { ProjectComponent } from './task/Jira/project/project.component';
 import { SprintComponent } from './task/Jira/sprint/sprint.component';
 import { FilterDataPipe } from './service/filter-data.pipe';
@@ -18,11 +18,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './task/dashboard/dashboard.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';//https://valor-software.com/ngx-bootstrap/#/datepicker
-import { ToastrModule } from 'ngx-toastr';//https://www.npmjs.com/package/ngx-toastr
-//Sweet alert => https://www.itsolutionstuff.com/post/how-to-use-sweetalert2-in-angularexample.html
-import { BlockUIModule } from 'ng-block-ui'; //https://www.npmjs.com/package/ng-block-ui
-import { JwPaginationModule } from 'jw-angular-pagination';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';  //https://valor-software.com/ngx-bootstrap/#/datepicker
+import { ToastrModule } from 'ngx-toastr';                      //https://www.npmjs.com/package/ngx-toastr
+                                                                //Sweet alert => https://www.itsolutionstuff.com/post/how-to-use-sweetalert2-in-angularexample.html
+import { BlockUIModule } from 'ng-block-ui';                    //https://www.npmjs.com/package/ng-block-ui
+import { JwPaginationModule } from 'jw-angular-pagination';     //https://jasonwatmore.com/post/2018/04/26/npm-jw-angular-pagination-component
+import { LoadingBarModule } from '@ngx-loading-bar/core';       //https://github.com/aitboudad/ngx-loading-bar
 import { DepartmentComponent } from './task/Employee/department/department.component';
 import { DesignationComponent } from './task/Employee/designation/designation.component';
 
@@ -38,7 +39,8 @@ import { DesignationComponent } from './task/Employee/designation/designation.co
     BsDatepickerModule.forRoot(),
     ToastrModule.forRoot(),
     BlockUIModule.forRoot(),
-    JwPaginationModule
+    JwPaginationModule,
+    LoadingBarModule
   ],
   providers: [AuthGuard,AuthService,DataService],
   bootstrap: [AppComponent]

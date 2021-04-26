@@ -16,7 +16,18 @@
           </div>
           <!-- <input type="text"   [(ngModel)]="filterData"   class="form-control" placeholder="Search" > -->
         </div>
-        <div class="col-md-7">
+        <div class="col-md-2">
+          <div class="form-group">                    
+            <select name="numberOfRow" [(ngModel)]="numberOfRow" class="form-control">
+             <option selected  value="0" >Number of item</option>
+             <option value="5" >5</option>
+             <option value="10" >10</option>
+             <option value="20" >20</option>
+             <option value="50" >50</option>
+            </select>          
+        </div>
+        </div>
+        <div class="col-md-4">
           <button type="button" class="btn btn-sm btn-primary float-right" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
             <i class="fa fa-plus-circle" aria-hidden="true"></i> Project</button>
         </div>
@@ -106,3 +117,4 @@
   <!--Modal End-->
 
   <block-ui message="Loading..."></block-ui>
+  <ngx-loading-bar></ngx-loading-bar>

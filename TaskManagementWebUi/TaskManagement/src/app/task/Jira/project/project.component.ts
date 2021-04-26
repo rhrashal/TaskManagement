@@ -9,6 +9,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { FilterDataPipe } from 'src/app/service/filter-data.pipe';
 import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 
 declare var $:any;
 
@@ -19,6 +20,10 @@ declare var $:any;
 })
 export class ProjectComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
+  loader = this.loadingBar.useRef();
+
+  numberOfRow:number = 0;
+  //aa:number=10;
   registerForm: FormGroup;
   submitted = false;
   projectList:any = []
@@ -32,10 +37,15 @@ export class ProjectComponent implements OnInit {
   minDate: Date;
 
 
-  constructor(private http : HttpClient, private rest : DataService,private formBuilder: FormBuilder,private toastr: ToastrService) {
+  constructor(private http : HttpClient, private rest : DataService,
+              private formBuilder: FormBuilder,
+              private toastr: ToastrService,
+              private loadingBar: LoadingBarService,              
+              ) {
+
     this.minDate = new Date();
    }
-
+//
   ngOnInit() {
     this.getProjectList();    
     this.registerForm = this.formBuilder.group({
@@ -64,8 +74,8 @@ export class ProjectComponent implements OnInit {
       //this.toastr.success(this.projectList.length + " Data found", "Status")
     });
   }
-
-pageOfItems: Array<any>;
+  //this.paging.
+  pageOfItems: Array<any>;
   onChangePage(pageOfItems: Array<Project>) {
     this.pageOfItems = pageOfItems;
 }
@@ -100,6 +110,7 @@ onSubmit() {
     }
 
     editClick(data){
+      this.loader.start()
       this.blockUI.start(); // Start blocking
  
       // setTimeout(() => {
@@ -112,6 +123,8 @@ onSubmit() {
       this.project.IsSupport=data.isSupport;
       console.log(this.project);
       this.blockUI.stop();
+      this.loader.complete();
+
      // this.registerForm.value.ProjectName = data.projectName;
     }
 
