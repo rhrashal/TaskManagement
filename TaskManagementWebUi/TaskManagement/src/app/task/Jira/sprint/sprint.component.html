@@ -15,7 +15,16 @@
                 </div>
               </div>
         </div>
-        <div class="col-md-7">
+        <div class="d-flex flex-row-reverse bd-highlight">
+          <div class="bd-highlight">
+            <select (change)="onTableSizeChange($event)" class="custom-select">
+              <option *ngFor="let size of tableSizes" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-5">
           <button type="button" class="btn btn-sm btn-primary float-right" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
             <i class="fa fa-plus-circle" aria-hidden="true"></i> Sprint</button>  
         </div>
@@ -34,7 +43,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of pageOfItems">
+            <tr *ngFor="let item of fiteredArr | paginate : {
+              itemsPerPage: tableSize,
+              currentPage: page,
+              totalItems: count
+            };">
               <td>{{item.sprintTitle}}</td> 
               <td>{{item.projectName}}</td>
               <td>{{item.isSupport? 'Yes' : 'No'}}</td>
@@ -55,9 +68,17 @@
       </div>
     </div>
   </div>
-  <div class="pb-0 pt-0" style="margin-left: 50%;">
-    <jw-pagination [items]="fiteredArr" (changePage)="onChangePage($event)" [pageSize]="8" [maxPages]="6"></jw-pagination>
+  <div class="d-flex justify-content-center">
+    <pagination-controls 
+      responsive="true" 
+      previousLabel="&lt;" 
+      nextLabel="&gt;" 
+      (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
   </div>
+  <!-- <div class="pb-0 pt-0" style="margin-left: 50%;">
+    <jw-pagination [items]="fiteredArr" (changePage)="onChangePage($event)" [pageSize]="8" [maxPages]="6"></jw-pagination>
+  </div> -->
   <!--Modal Start -->
   
    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -125,3 +146,4 @@
   <!--Modal End-->
   
   <block-ui message="Loading..."></block-ui>
+  <ngx-loading-bar></ngx-loading-bar>

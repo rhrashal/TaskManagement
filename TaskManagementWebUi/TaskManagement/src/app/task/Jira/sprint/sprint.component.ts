@@ -8,6 +8,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { FilterDataPipe } from 'src/app/service/filter-data.pipe';
 import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 declare var $:any;
 
 @Component({
@@ -17,6 +18,7 @@ declare var $:any;
 export class SprintComponent implements OnInit {
 
   @BlockUI() blockUI : NgBlockUI;
+  loader = this.loadingBar.useRef();
 
   submitted:boolean = false;
   SprintList:any = []
@@ -36,17 +38,36 @@ export class SprintComponent implements OnInit {
   minDate:Date = new Date;
   minDateEnd:Date = new Date;
 
-  constructor(private http : HttpClient, private rest : DataService,private toastr: ToastrService) { 
+
+  page = 1;
+  count = 0;
+  tableSize = 7;
+  tableSizes = [5, 10, 20, 50];
+
+  constructor(private http : HttpClient, private rest : DataService,private toastr: ToastrService, private loadingBar: LoadingBarService ) { 
 
     this.Sprint = new Sprint()
   }
 
   ngOnInit() {
-   this.blockUI.start("loading..");
+    this.loader.start();
+  // this.blockUI.start("loading..");
     this.getProjectList();
     this.getSprintList();    
-    this.blockUI.stop();
+    //this.blockUI.stop();
+    this.loader.complete();
     
+  }
+
+  onTableDataChange(event){
+    this.page = event;
+    //this.getSprintList();  
+  }  
+
+  onTableSizeChange(event): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    //this.getSprintList();  
   }
 
   
@@ -56,10 +77,8 @@ export class SprintComponent implements OnInit {
   filterFunction(){
      this.fiteredArr = this.filterPipe.transform(this.SprintList,this.filterText); 
   }
-  pageOfItems: Array<any>;
-  onChangePage(pageOfItems: Array<Sprint>) {
-    this.pageOfItems = pageOfItems;
-}
+
+
 dateChange(){
   this.minDateEnd = new Date(this.Sprint.StartDate);
   console.log(this.minDateEnd);

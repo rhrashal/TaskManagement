@@ -22,8 +22,6 @@ export class ProjectComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   loader = this.loadingBar.useRef();
 
-  numberOfRow:number = 0;
-  //aa:number=10;
   registerForm: FormGroup;
   submitted = false;
   projectList:any = []
@@ -36,6 +34,10 @@ export class ProjectComponent implements OnInit {
 
   minDate: Date;
 
+  page = 1;
+  count = 0;
+  tableSize = 7;
+  tableSizes = [3, 6, 9, 12];
 
   constructor(private http : HttpClient, private rest : DataService,
               private formBuilder: FormBuilder,
@@ -47,13 +49,27 @@ export class ProjectComponent implements OnInit {
    }
 //
   ngOnInit() {
+    this.loader.start()
     this.getProjectList();    
     this.registerForm = this.formBuilder.group({
       ProjectName: ['', Validators.required],
       ExpireDate: ['', Validators.required],
       IsSupport: ['', Validators.required]
-  });
+    });
+  this.loader.complete();
   }
+
+  onTableDataChange(event){
+    this.page = event;
+    this.getProjectList();    
+  }  
+
+  onTableSizeChange(event): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getProjectList();    
+  }  
+
  // convenience getter for easy access to form fields
     get f() { return this.registerForm.controls; }
 

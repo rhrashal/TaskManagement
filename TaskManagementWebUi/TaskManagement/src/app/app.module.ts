@@ -22,11 +22,12 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';  //https://valor-
 import { ToastrModule } from 'ngx-toastr';                      //https://www.npmjs.com/package/ngx-toastr
                                                                 //Sweet alert => https://www.itsolutionstuff.com/post/how-to-use-sweetalert2-in-angularexample.html
 import { BlockUIModule } from 'ng-block-ui';                    //https://www.npmjs.com/package/ng-block-ui
-import { JwPaginationModule } from 'jw-angular-pagination';     //https://jasonwatmore.com/post/2018/04/26/npm-jw-angular-pagination-component
+//import { JwPaginationModule } from 'jw-angular-pagination';     //https://jasonwatmore.com/post/2018/04/26/npm-jw-angular-pagination-component
 import { LoadingBarModule } from '@ngx-loading-bar/core';       //https://github.com/aitboudad/ngx-loading-bar
 import { DepartmentComponent } from './task/Employee/department/department.component';
 import { DesignationComponent } from './task/Employee/designation/designation.component';
 
+import { NgxPaginationModule } from 'ngx-pagination'; //https://www.positronx.io/angular-server-side-pagination-with-ngx-pagination-example/
 
 @NgModule({
   declarations: [
@@ -38,9 +39,9 @@ import { DesignationComponent } from './task/Employee/designation/designation.co
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
     ToastrModule.forRoot(),
-    BlockUIModule.forRoot(),
-    JwPaginationModule,
-    LoadingBarModule
+    BlockUIModule.forRoot(),    
+    LoadingBarModule,
+    NgxPaginationModule
   ],
   providers: [AuthGuard,AuthService,DataService],
   bootstrap: [AppComponent]
