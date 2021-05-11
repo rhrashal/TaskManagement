@@ -1,1 +1,121 @@
 <p>department works!</p>
+
+<div class="container">
+    <div class="row card-footer">
+      <div class="col-md-2">
+        <H4><strong>Department</strong></H4>      
+      </div>
+        <div class="col-md-3">
+            <div class="d-none d-sm-inline-block form-inline navbar-search">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light " placeholder="Search for..."  [(ngModel)]="filterText">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary Search" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+              </div>
+        </div>
+        <div class="d-flex flex-row-reverse bd-highlight">
+          <div class="bd-highlight">
+            <select (change)="onTableSizeChange($event)" class="custom-select">
+              <option *ngFor="let size of tableSizes" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="resetFrom()" data-toggle="modal" data-target=".bd-example-modal-lg">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i> Department</button>  
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-border">
+          <thead>
+            <tr>
+              <th scope="col">Department Name</th>
+              <th scope="col">Display Order</th>
+              <th>Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of DepartmentList | paginate : {
+              itemsPerPage: tableSize,
+              currentPage: page,
+              totalItems: count
+            } | filterData : filterText;">
+              <td>{{item.departmentName}}</td>
+              <td>{{item.disOrder}}</td>
+              <td>
+                <button type="button" class="btn mr-1" style="color: rgb(41, 6, 241);"    data-toggle="modal" data-target=".bd-example-modal-lg"
+                 (click)="editClick(item)" data-backdrop="static" data-keyboard="false" >
+                 <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn mr-1" style="color: red;"    (click)="deleteProject(item.departmentID)">
+                <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+            </tr>         
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <pagination-controls 
+      responsive="true" 
+      previousLabel="&lt;" 
+      nextLabel="&gt;" 
+      (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
+  </div>
+  <!-- <div class="pb-0 pt-0" style="margin-left: 50%;">
+    <jw-pagination [items]="fiteredArr" (changePage)="onChangePage($event)" [pageSize]="8" [maxPages]="6"></jw-pagination>
+  </div> -->
+  <!--Modal Start -->
+  
+   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="modal-body">      
+            <div class="form-group"  [class.has-error]="DepartmentName.invalid && DepartmentName.touched || DepartmentName.invalid && submitted" [class.has-success]="DepartmentName.valid">
+              <label for="DepartmentName" class="control-label">Department Name:  <span class="required">*</span>  </label>
+              <input type="text" required  class="form-control"   name="Department"
+              [(ngModel)]="Department.DepartmentName" #DepartmentName="ngModel" >    
+              <span class="help-block"
+                *ngIf="DepartmentName.invalid && DepartmentName.touched || DepartmentName.invalid && submitted">
+                Department Name is required
+              </span>             
+            </div>    
+            <div class="form-group"  [class.has-error]="DisOrder.invalid && DisOrder.touched || DisOrder.invalid && submitted" [class.has-success]="DisOrder.valid">
+                <label for="DisOrder" class="control-label">Display Order :  <span class="required">*</span>  </label>
+                <input type="number" required  class="form-control"   name="DisOrder"
+                [(ngModel)]="Department.DisOrder" #DisOrder="ngModel" >    
+                <span class="help-block"
+                  *ngIf="DisOrder.invalid && DisOrder.touched || DisOrder.invalid && submitted">
+                  DisOrder is required
+                </span>             
+              </div>                         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" (click)="submitted=true" class="btn btn-sm btn-primary">Save</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <!--Modal End-->
+  
+  <block-ui message="Loading..."></block-ui>
+  <ngx-loading-bar></ngx-loading-bar>

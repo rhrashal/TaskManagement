@@ -107,7 +107,7 @@ namespace TaskManagementSystem.Controllers
         public JsonResult GetAllDepartment()
         {
             CommonResponse cr = new CommonResponse();
-            cr.results = _context.EmpDepartment.Where(e => e.IsDeleted == false).ToList();
+            cr.results = _context.EmpDepartment.Where(e => e.IsDeleted == false).OrderBy(e => e.DisOrder).ToList();
             return new JsonResult(cr);
         }
         [HttpPost]
