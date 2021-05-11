@@ -4,6 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './login/not-found/not-found.component';
 import { AuthGuard } from './Service/auth.guard';
 import { DashboardComponent } from './task/dashboard/dashboard.component';
+import { DepartmentComponent } from './task/Employee/department/department.component';
+import { DesignationComponent } from './task/Employee/designation/designation.component';
 import { EmpCategoryComponent } from './task/Employee/emp-category/emp-category.component';
 import { ProjectComponent } from './task/Jira/project/project.component';
 import { SprintComponent } from './task/Jira/sprint/sprint.component';
@@ -17,7 +19,9 @@ const routes: Routes = [
                       { path: 'Dashboard', component: DashboardComponent},
                       { path: 'Project', component: ProjectComponent},
                       { path: 'Sprint', component: SprintComponent },
-                      { path: 'Category', component: EmpCategoryComponent }
+                      { path: 'Category', component: EmpCategoryComponent },
+                      { path: 'Department', component: DepartmentComponent },
+                      { path: 'Designation', component: DesignationComponent }                      
                ]
   },
   { path: "", redirectTo: "Task/Dashboard", pathMatch: "full" },

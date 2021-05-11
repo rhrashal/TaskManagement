@@ -9,6 +9,7 @@ export class Project{
         public IsSupport?: boolean
          ){}
   } 
+
   export class Sprint{
     constructor(
         public  Id? : number,
@@ -24,5 +25,29 @@ export class Project{
         public SprintStartDate? : string,
         public SprintEndDate?:string
 
+         ){}
+  } 
+
+  export class EmpCategory{
+    constructor(
+        public CategoryID?: number,
+        public CategoryName? : string
+         ){}
+  } 
+
+  export class EmpDepartment{
+    constructor(
+        public DepartmentID?: number,
+        public DepartmentName? : string,
+        public  DisOrder? : number,
+         ){}
+  } 
+
+  export class EmpDesignation{
+    constructor(
+        public DesignationID?: number,
+        public DesignationName? : string,
+        public  CategoryID? : number,
+        public  DesignationOrder? : number,
          ){}
   } 
